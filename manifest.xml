@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+           xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="MailApp">
+
+  <!-- Begin Basic Settings: Add-in metadata, used for all versions of Office unless override provided. -->
+
+  <!-- IMPORTANT! Id must be unique for your add-in, if you reuse this manifest ensure that you change this id to a new GUID. -->
+  <Id>05c2e1c9-3e1d-406e-9a91-e9ac64854143</Id>
+
+  <!--Version. Updates from the store only get triggered if there is a version change. -->
+  <Version>1.0.0.0</Version>
+  <ProviderName>MS AB</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <!-- The display name of your add-in. Used on the store and various places of the Office UI such as the add-ins dialog. -->
+  <DisplayName DefaultValue="Test Plugin Dev" />
+  <Description DefaultValue="Full featured outlook integration with MS, provided by MS"/>
+
+  <!-- Icon for your add-in. Used on installation screens and the add-ins dialog. -->
+  <IconUrl DefaultValue="https://localhost:3000/assets/icon-32.png" />
+  <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/hi-res-icon.png"/>
+
+  <!--If you plan to submit this add-in to the Office Store, uncomment the SupportUrl element below-->
+  <SupportUrl DefaultValue="https://loftux.com/" />
+
+  <!--End Basic Settings. -->
+
+  <Hosts>
+    <Host Name="Mailbox" />
+  </Hosts>
+  <Requirements>
+    <Sets>
+      <Set Name="Mailbox" MinVersion="1.1" />
+    </Sets>
+  </Requirements>
+  <FormSettings>
+    <Form xsi:type="ItemRead">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://localhost:3000"/>
+        <RequestedHeight>250</RequestedHeight>
+      </DesktopSettings>
+    </Form>
+
+    <Form xsi:type="ItemEdit">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://localhost:3000" />
+      </DesktopSettings>
+    </Form>
+  </FormSettings>
+
+  <Permissions>ReadWriteItem</Permissions>
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read" />
+  </Rule>
+  <DisableEntityHighlighting>false</DisableEntityHighlighting>
+
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" xsi:type="VersionOverridesV1_1">
+      <Requirements>
+        <bt:Sets DefaultMinVersion="1.3">
+          <bt:Set Name="Mailbox" />
+        </bt:Sets>
+      </Requirements>
+
+
+
+      <Hosts>
+        <Host xsi:type="MailHost">
+
+          <DesktopFormFactor>
+            <!-- Location of the Functions that UI-less buttons can trigger (ExecuteFunction Actions). -->
+            <FunctionFile resid="functionFile" />
+
+            <!-- Message Read -->
+            <ExtensionPoint xsi:type="MessageReadCommandSurface">
+              <!-- Use the default tab of the ExtensionPoint or create your own with <CustomTab id="myTab"> -->
+              <OfficeTab id="TabDefault">
+                <!-- Up to 6 Groups added per Tab -->
+                <Group id="msgReadGroup">
+                  <Label resid="groupLabel" />
+                  <!-- Launch the add-in : task pane button -->
+                  <Control xsi:type="Button" id="msgReadOpenPaneButton">
+                    <Label resid="paneReadButtonLabel" />
+                    <Supertip>
+                      <Title resid="paneReadSuperTipTitle" />
+                      <Description resid="paneReadSuperTipDescription" />
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="icon16" />
+                      <bt:Image size="32" resid="icon32" />
+                      <bt:Image size="80" resid="icon80" />
+                    </Icon>
+                    <Action xsi:type="ShowTaskpane">
+                      <SourceLocation resid="messageReadTaskPaneUrl" />
+                    </Action>
+                  </Control>
+                </Group>
+              </OfficeTab>
+            </ExtensionPoint>
+
+            <!-- Message Write -->
+            <ExtensionPoint xsi:type="MessageComposeCommandSurface">
+              <!-- Use the default tab of the ExtensionPoint or create your own with <CustomTab id="myTab"> -->
+              <OfficeTab id="TabDefault">
+                <!-- Up to 6 Groups added per Tab -->
+                <Group id="msgComposeCmdGroup">
+                  <Label resid="groupLabel" />
+                  <!-- Launch the add-in : task pane button -->
+                  <Control xsi:type="Button" id="msgComposeInsertButton">
+                    <Label resid="paneComposeButtonLabel" />
+                    <Supertip>
+                      <Title resid="paneComposeSuperTipTitle" />
+                      <Description resid="paneComposeSuperTipDescription" />
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="icon16" />
+                      <bt:Image size="32" resid="icon32" />
+                      <bt:Image size="80" resid="icon80" />
+                    </Icon>
+                    <Action xsi:type="ShowTaskpane">
+                      <SourceLocation resid="messageComposeTaskPaneUrl" />
+                    </Action>
+                  </Control>
+                </Group>
+              </OfficeTab>
+            </ExtensionPoint>
+
+          </DesktopFormFactor>
+
+          <MobileFormFactor>
+            <FunctionFile resid="functionFile" />
+
+            <!-- Message Read -->
+            <ExtensionPoint xsi:type="MobileMessageReadCommandSurface">
+
+              <!-- Up to 6 Groups added per Tab -->
+              <Group id="mobileMsgRead">
+                <Label resid="groupLabel" />
+                <!-- Launch the add-in : task pane button -->
+                <Control xsi:type="MobileButton" id="msgReadOpenPaneButton">
+                  <Label resid="paneReadButtonLabel" />
+
+                  <Icon xsi:type="bt:MobileIconList">
+                    <bt:Image size="25" scale="1" resid="icon16" />
+                    <bt:Image size="25" scale="2" resid="icon16" />
+                    <bt:Image size="25" scale="3" resid="icon16" />
+
+                    <bt:Image size="32" scale="1" resid="icon32" />
+                    <bt:Image size="32" scale="2" resid="icon32" />
+                    <bt:Image size="32" scale="3" resid="icon32" />
+
+                    <bt:Image size="48" scale="1" resid="icon80" />
+                    <bt:Image size="48" scale="2" resid="icon80" />
+                    <bt:Image size="48" scale="3" resid="icon80" />
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <SourceLocation resid="messageReadTaskPaneUrl" />
+                  </Action>
+                </Control>
+                <!-- Go to http://aka.ms/ButtonCommands to learn how to add more Controls: ExecuteFunction and Menu -->
+              </Group>
+
+            </ExtensionPoint>
+
+            <!-- Message Write -->
+            <ExtensionPoint xsi:type="MobileMessageComposeCommandSurface">
+              <!-- Use the default tab of the ExtensionPoint or create your own with <CustomTab id="myTab"> -->
+
+              <!-- Up to 6 Groups added per Tab -->
+              <Group id="msgComposeCmdGroup">
+                <Label resid="groupLabel" />
+                <!-- Launch the add-in : task pane button -->
+                <Control xsi:type="MobileButton" id="msgComposeInsertButton">
+                  <Label resid="paneComposeButtonLabel" />
+
+                  <Icon xsi:type="bt:MobileIconList">
+                    <bt:Image size="25" scale="1" resid="icon16" />
+                    <bt:Image size="25" scale="2" resid="icon16" />
+                    <bt:Image size="25" scale="3" resid="icon16" />
+
+                    <bt:Image size="32" scale="1" resid="icon32" />
+                    <bt:Image size="32" scale="2" resid="icon32" />
+                    <bt:Image size="32" scale="3" resid="icon32" />
+
+                    <bt:Image size="48" scale="1" resid="icon80" />
+                    <bt:Image size="48" scale="2" resid="icon80" />
+                    <bt:Image size="48" scale="3" resid="icon80" />
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <SourceLocation resid="messageComposeTaskPaneUrl" />
+                  </Action>
+                </Control>
+              </Group>
+
+            </ExtensionPoint>
+
+          </MobileFormFactor>
+
+
+        </Host>
+      </Hosts>
+
+      <Resources>
+        <bt:Images>
+          <bt:Image id="icon16" DefaultValue="https://localhost:3000/assets/icon-16.png"/>
+          <bt:Image id="icon32" DefaultValue="https://localhost:3000/assets/icon-32.png"/>
+          <bt:Image id="icon80" DefaultValue="https://localhost:3000/assets/icon-80.png"/>
+        </bt:Images>
+        <bt:Urls>
+          <bt:Url id="functionFile" DefaultValue="https://localhost:3000/function-file/function-file.html"/>
+          <bt:Url id="messageReadTaskPaneUrl" DefaultValue="https://localhost:3000"/>
+          <bt:Url id="messageComposeTaskPaneUrl" DefaultValue="https://localhost:3000"/>
+        </bt:Urls>
+        <bt:ShortStrings>
+          <bt:String id="groupLabel" DefaultValue="Test Plugin"/>
+          <bt:String id="customTabLabel" DefaultValue="Test Plugin"/>
+          <bt:String id="paneReadButtonLabel" DefaultValue="Test Plugin"/>
+          <bt:String id="paneReadSuperTipTitle" DefaultValue="Test Plugin"/>
+          <bt:String id="paneComposeButtonLabel" DefaultValue="Test Plugin"/>
+          <bt:String id="paneComposeSuperTipTitle" DefaultValue="Test Plugin"/>
+        </bt:ShortStrings>
+        <bt:LongStrings>
+          <bt:String id="paneReadSuperTipDescription" DefaultValue="Full featured outlook integration with MS, provided by MS."/>
+          <bt:String id="paneComposeSuperTipDescription" DefaultValue="Full featured outlook integration with MS, provided by MS."/>
+        </bt:LongStrings>
+      </Resources>
+    </VersionOverrides>
+  </VersionOverrides>
+</OfficeApp>

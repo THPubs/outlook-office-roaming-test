@@ -1,0 +1,41 @@
+{
+  "extends": ["tslint-react", "tslint-config-prettier"],
+  "rules": {
+    "no-reference": true,
+    "only-arrow-functions": [true, "allow-declarations"],
+    "no-namespace": [true, "allow-declarations"],
+    "class-name": true,
+    "curly": true,
+    "eofline": true,
+    "forin": true,
+    "indent": [true, "spaces", 2],
+    "label-position": true,
+    "no-arg": true,
+    "no-var-keyword": true,
+    "no-console": [true, "debug", "info", "time", "timeEnd", "trace"],
+    "no-construct": true,
+    "no-debugger": true,
+    "no-duplicate-variable": true,
+    "no-empty": false,
+    "no-eval": true,
+    "no-submodule-imports": false,
+    "no-trailing-whitespace": true,
+    "no-unused-expression": false,
+    "no-use-before-declare": true,
+    "one-line": [true, "check-open-brace", "check-whitespace"],
+    "quotemark": [true, "single", "jsx-double"],
+    "radix": true,
+    "semicolon": [true, "always"],
+    "triple-equals": [true, "allow-null-check"],
+    "variable-name": false,
+    "whitespace": [
+      true,
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-separator",
+      "check-type"
+    ],
+    "jsx-no-lambda": false
+  }
+}
