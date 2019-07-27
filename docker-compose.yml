@@ -3,6 +3,6 @@ services:
   website:
     restart: always
     build: .
-    image: halo_flights/website:1.0.0
+    image: testapp/website:1.0.0
     ports:
       - 5900:5000
