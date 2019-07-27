@@ -32,9 +32,7 @@ FROM node:carbon-alpine
 WORKDIR /usr/src/app
 
 COPY --from=build-stage /usr/src/app/dist /usr/src/app/dist
-COPY --from=build-stage /usr/src/app/docker-start.sh /usr/src/app
-COPY --from=build-stage /usr/src/app/env2js.sh /usr/src/app
 
 RUN yarn global add serve
-CMD sh ./docker-start.sh
+CMD serve -s dist
 EXPOSE 5000
